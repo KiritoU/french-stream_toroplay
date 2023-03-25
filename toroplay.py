@@ -534,7 +534,7 @@ class Toroplay:
 
     def insert_season(self, post_id: int):
         season_term_name = (
-            self.film["post_title"] + " - Season " + self.film["season_number"]
+            self.film["post_title"] + " - Saison " + self.film["season_number"]
         )
         season_term_slug = self.film["post_title"] + " - " + self.film["season_number"]
         season_term_id, isNewSeason = helper.insert_terms(
