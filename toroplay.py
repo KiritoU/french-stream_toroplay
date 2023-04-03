@@ -307,12 +307,12 @@ class ToroplayHelper:
         terms = [term.strip() for term in terms.split(",")] if not is_title else [terms]
         termIds = []
         for term in terms:
-            term_slug = slugify(term_slug) if term_slug else slugify(term)
+            term_insert_slug = slugify(term_slug) if term_slug else slugify(term)
             cols = "tt.term_taxonomy_id, tt.term_id"
             table = (
                 f"{CONFIG.TABLE_PREFIX}term_taxonomy tt, {CONFIG.TABLE_PREFIX}terms t"
             )
-            condition = f't.slug = "{term_slug}" AND tt.term_id=t.term_id AND tt.taxonomy="{taxonomy}"'
+            condition = f't.slug = "{term_insert_slug}" AND tt.term_id=t.term_id AND tt.taxonomy="{taxonomy}"'
 
             be_term = database.select_all_from(
                 table=table, condition=condition, cols=cols
@@ -320,7 +320,7 @@ class ToroplayHelper:
             if not be_term:
                 term_id = database.insert_into(
                     table=f"{CONFIG.TABLE_PREFIX}terms",
-                    data=(term, term_slug, 0),
+                    data=(term, term_insert_slug, 0),
                 )
                 term_taxonomy_count = 1 if taxonomy == "seasons" else 0
                 term_taxonomy_id = database.insert_into(
